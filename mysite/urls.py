@@ -16,6 +16,9 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf.urls.static import static
+from django.template.backends import django
+
+from blog.views import signup
 from mysite import settings
 
 urlpatterns = [
@@ -23,5 +26,6 @@ urlpatterns = [
     url('^admin/', admin.site.urls),
     url('^polls/', include('polls.urls')),
     url('^blog/', include("blog.urls")),
-
+    url(r'^accounts/', include('django.contrib.auth.urls')),
+    url(r'^accounts/signup/$', signup, name="signup"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

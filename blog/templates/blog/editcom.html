@@ -1,0 +1,41 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{% static 'blog/css/comment.css' %}" >
+{% endblock %}
+{% block title %}Post {% endblock %}
+
+{% block body %}
+
+
+{% include 'blog/nav_bar.html' %}
+<div class="jumbotron" style="background-image: url('/media/{{ post.img }}')">
+    <div class="container" style="height :500px;">
+
+  <h1 style="margin-top:200px;color:white;">{{ post.title  }}</h1>
+
+
+</div>
+    </div>
+<h4 class="para">
+ {{ post.content }}
+    <br>
+    <br>
+    Posted by {{ post.user }} date:{{ post.date }}
+</h4>
+
+<button><a href="/blog/editpost/{{ post.id }}"> EDIT POST</a></button>
+<button><a href="/blog/deletepost/{{ post.id }}"> Delete POST</a></button>
+
+<div id="div1">
+    <form action="" method="post" >
+        {% csrf_token %}
+       <div class="form-group">
+					<textarea name="comment" required class="form-control" placeholder="Enter comment" >{{ comment.comment_text }}</textarea>
+
+				</div>
+        <button type="submit" name="go" class="btn btn-primary btn-block">Post comment</button>
+    </form>
+</div>
+
