@@ -76,7 +76,7 @@ def del_com(request, postno, comno):
         raise PermissionDenied
     com = Comment.objects.get(id=int(comno))
     com.delete()
-    return redirect('post',post.id)
+    return redirect('post', post.id)
 
 
 
