@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.core.exceptions import PermissionDenied
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 # Create your views here.
@@ -21,9 +22,8 @@ def post_detail(request, pk):
     template_name = 'blog/view.html'
     post = Post.objects.get(id=int(pk))
     comment = Comment.objects.filter(post=post)
-    context = {'post': post, 'comment':comment}
+    context = {'post': post, 'comments': comment}
     return render(request, template_name, context)
-
 
 def add_post(request):
     if request.method == "POST":
@@ -48,7 +48,7 @@ def edit_post(request, pk):
         raise PermissionDenied
     if request.method == "GET":
         template_name= 'blog/post_edit.html'
-        context = {'post':post}
+        context = {'post': post}
         return render(request, template_name, context)
     else:
         post.title = request.POST['title']
@@ -67,21 +67,8 @@ def del_post(request,id):
             post.delete()
             return redirect('home')
         raise PermissionDenied
-#def comm_edit(request, postno, comno):
-    #post = Post.objects.get(id=postno)
-    #c = Comment.objects.get(id=comno)
-    #if request.user.username != post.user.username:
-     #   raise PermissionDenied
-    #if request.method == "GET":
-     #   template = 'blog/editcom.html'
-      #  context = {"comment": c, "post": post}
-       # return render(request, template, context)
-    #else:
-     #   comm = request.POST['comment']
-      #  user = User.objects.get(username=request.user.username)
-       # com = Comment(id=comno, comment_text=comm, user=user,post_id=postno)
-        #com.save()
-        #return redirect('post', postno)
+
+
 
 def del_com(request, postno, comno):
     post = Post.objects.get(id=int(postno))
@@ -89,8 +76,7 @@ def del_com(request, postno, comno):
         raise PermissionDenied
     com = Comment.objects.get(id=int(comno))
     com.delete()
-    return redirect('post', post.id)
-
+    return redirect('post',post.id)
 
 
 

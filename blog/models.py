@@ -19,7 +19,7 @@ class Post (models.Model):
 
 class Comment(models.Model):
     user = models.ForeignKey(User)
-    post= models.ForeignKey(Post)
+    post = models.ForeignKey(Post)
     comment_text = models.CharField(max_length=150)
     date = models.DateTimeField(auto_now=True, auto_now_add=False)
 
